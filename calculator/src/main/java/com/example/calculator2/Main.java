@@ -5,69 +5,43 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
         Calculator calculator = new Calculator();
 
-        while (true) { // 계산기 반복 실행
-            System.out.print("첫 번째 숫자를 입력하세요: ");
-            calculator.setFirstNum(sc.nextInt());
-            System.out.print("두 번째 숫자를 입력하세요: ");
-            calculator.setSecondNum(sc.nextInt());
-            System.out.print("사칙연산 기호를 입력하세요: ");
-            calculator.setSign(sc.next().toCharArray()[0]);
+        // 양의 정수 입력 받기
+        System.out.print("첫 번째 숫자를 입력하세요: ");
+        int firstNum = sc.nextInt();
+        System.out.print("첫 번째 숫자를 입력하세요: ");
+        int secondNum = sc.nextInt();
+        // 사칙연산 기호 입력 받기
+        System.out.print("사칙연산 기호를 입력하세요: ");
+        char operator = sc.next().charAt(0);
 
-            while (true) {
-                // 연산
-                if (calculator.getSign() == '+') {
-                    calculator.plus();
-                    System.out.println("결과는 :" + calculator.getResultNum());
-                    calculator.addResultList();
-                    break;
-                } else if (calculator.getSign() == '-') {
-                    calculator.minus();
-                    System.out.println("결과는 :" + calculator.getResultNum());
-                    calculator.addResultList();
-                    break;
-                } else if (calculator.getSign() == '*') {
-                    calculator.multiply();
-                    System.out.println("결과는 :" + calculator.getResultNum());
-                    calculator.addResultList();
-                    break;
-                } else if (calculator.getSign() == '/') {
-                    if (calculator.getSecondNum() == 0) {
-                        System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
-                        break;
-                    } else {
-                        calculator.divide();
-                        System.out.println("결과는 :" + calculator.getResultNum());
-                        calculator.addResultList();
-                        break;
-                    }
-                }
-            }
-            System.out.print("계속 계산하시겠습니까? (Y(y) 또는 N(n) 입력): ");
-            String A = sc.next();
-            if (A.equals("n") || A.equals("N")) {
-                System.out.println("계산기 종료");
-                break;
-            } else if (A.equals("y") || A.equals("Y")) {
-                System.out.println("계산을 계속 합니다.");
-            }
-        }
-        // 결과값 저장 확인, 삭제
         while (true) {
-            System.out.println(calculator.getResultList());
-            System.out.print("결과를 삭제하시겠습니까?(Y/N) : ");
-            String B = sc.next();
-            if (B.equals("N") || B.equals("n")) {
-                System.out.println("종료");
+            // 연산 진행후 결과값을 출력
+            double result = calculator.calculate(firstNum, secondNum, operator);
+            System.out.println("결과값은 " + result + " 입니다.");
+
+            // 결과 조회
+            System.out.print("결과를 조회 하시겠습니까?(yes 입력 시 조회): ");
+            String select = sc.next();
+            if ("yes".equals(select)) {
+                System.out.println(calculator.getResultList());
+            }
+
+            // 첫번째 결과 삭제
+            System.out.print("첫번째 결과를 삭제 하시겠습니까?(yes 입력 시 삭제): ");
+            String remove = sc.next();
+            if ("yes".equals(remove)) {
+                calculator.remove();
+                System.out.println(calculator.getResultList());
+            }
+
+            // exit를 입력하기 전까지 무한으로 반복
+            System.out.print("계속 계산 하시겠습니까? (exit 입력 시 종료): ");
+            String next = sc.next();
+            if ("exit".equals(next)) {
+                System.out.println("계산을 종료합니다.");
                 break;
-            } else if (B.equals("Y") || B.equals("y")) {
-                System.out.print("몇번째 결과를 삭제하시겠습니까? : ");
-                int C = sc.nextInt();
-                calculator.deleteResultList(C-1);
-            } else {
-                System.out.println("잘못된 값을 입력하였습니다.");
             }
         }
     }

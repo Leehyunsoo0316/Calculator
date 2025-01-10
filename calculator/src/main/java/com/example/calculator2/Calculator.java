@@ -1,86 +1,43 @@
 package com.example.calculator2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Calculator {
-    private char sign; // 연산기호
-    private int firstNum; // 첫번째 숫자
-    private int secondNum; // 두번째 숫자
-    private int result; // 결과값
-    private ArrayList<Integer> resultList = new ArrayList<Integer>();
+    private final List<Double> resultList = new ArrayList<>(); // 결과값 리스트
 
-    // 생성자
-    public Calculator() {
-    // 로직
-    }
-
-    // 첫번째 정수 setter
-    public void setFirstNum(int firstNum) {
-        this.firstNum = firstNum;
-    }
-
-    // 두번째 정수 setter
-    public void setSecondNum(int secondNum) {
-        this.secondNum = secondNum;
-    }
-
-    // 연산기호 setter
-    public void setSign(char sign) {
-        this.sign = sign;
-    }
-
-    // 첫번째 정수 getter
-    public int getFirstNum() {
-        return firstNum;
-    }
-
-    // 두번째 정수 getter
-    public int getSecondNum() {
-        return secondNum;
-    }
-
-    // 연산기호 getter
-    public char getSign() {
-        return sign;
-    }
-
-    // 결과값 getter
-    public int getResultNum() {
+    // 연산을 진행하고 결과값을 리스트에 추가하는 메서드
+    public double calculate(int firstNum, int secondNum, char operator) {
+        double result = 0;
+        if (operator == '+') {
+            result = firstNum + secondNum;
+        } else if (operator == '-') {
+            result = firstNum - secondNum;
+        } else if (operator == '*') {
+            result = firstNum * secondNum;
+        } else if (operator == '/') {
+            if (secondNum == 0) {
+                System.out.println("나눗셈 연산에서 분모(두번째 정수)에 0이 입력될 수 없습니다.");
+            }
+            result = (double) firstNum / secondNum;
+        } else {
+            System.out.println("잘못된 연산기호를 입력하였습니다.");
+        }
+        addResult(result);
         return result;
     }
 
-    // 결과 리스트 getter
-    public ArrayList<Integer> getResultList() {
+    // getter
+    public List<Double> getResultList() {
         return resultList;
     }
 
-    // 더하기
-    public void plus() {
-        result = firstNum + secondNum;
-    }
-
-    // 빽기
-    public void minus() {
-        result = firstNum - secondNum;
-    }
-
-    // 곱하기
-    public void multiply() {
-        result = firstNum * secondNum;
-    }
-
-    // 나누기
-    public void divide() {
-        result = firstNum / secondNum;
-    }
-
-    // 결과 저장
-    public void addResultList() {
+    // setter
+    public void addResult(double result) {
         resultList.add(result);
     }
 
-    // 결과 삭제
-    public void deleteResultList(int A) {
-        resultList.remove(A);
+    public void remove() {
+        resultList.remove(0);
     }
 }
